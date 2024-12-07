@@ -10,14 +10,10 @@ console.log('this is antoher change using nodemon')
 
 
 
-
-
-
-
-
-
-
-
+// Class 1 - Meet the Node console
+app.get("/", (req, res)=> {
+    res.send('Hello Express')
+})
 
 
 
