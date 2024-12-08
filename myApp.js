@@ -13,7 +13,7 @@ console.log('this is antoher change using nodemon')
 
 // Middleware block
 // Montamos middleware para servir archivos estaticos desde el directorio /public
-app.use(("/public", express.static(__dirname + "/public")))
+app.use("/public", express.static(__dirname + "/public"))
 
 
 
