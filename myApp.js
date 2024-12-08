@@ -25,7 +25,6 @@ app.get("/", (req, res)=> {
 
 
 // Clase 4 - Serving json on a route
-
 app.get("/json", (req, res) => {
     res.json({"message": "Hello json"})
 })
