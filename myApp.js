@@ -1,5 +1,4 @@
 // Cargamos el .env file con dotenv
-
 let dotenv = require('dotenv').config()
 console.log('MESSAGE_STYLE:', process.env.MESSAGE_STYLE);
 
@@ -16,7 +15,7 @@ console.log('this is antoher change using nodemon')
 
 // Clase 4 -> Usando middleware antes de ver qué es el middleware
 
-// Middleware block
+// MIDDLEWARE BLOCK
 // Montamos middleware para servir archivos estaticos desde el directorio /public
 app.use("/public", express.static(__dirname + "/public"))
 
