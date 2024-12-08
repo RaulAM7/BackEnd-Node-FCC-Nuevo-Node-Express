@@ -14,12 +14,18 @@ console.log('this is antoher change using nodemon')
 
 
 // Clase 4 -> Usando middleware antes de ver qué es el middleware
-
 // MIDDLEWARE BLOCK
 // Montamos middleware para servir archivos estaticos desde el directorio /public
-app.use("/public", express.static(__dirname + "/public"))
 
+// Globales App
+app.use((req, res, next) => {
+    console.log('Empiezan los middleware')
+})
+app.use(express.static(__dirname + "/public")) 
+app.use(express.static(__dirname + "/views")) // Le decimos a la app que en cualquier momento puede usar los archivos de ambos directorios 
 
+// Route specific
+app.use("/public", express.static(__dirname + "/public")) // Le decimos a la app que puede la ruta /public usar los archivos del directorio /public
 
 // Class 2 - Start a working Express server
 app.get("/", (req, res)=> {
@@ -27,12 +33,10 @@ app.get("/", (req, res)=> {
     res.sendFile(absolutePath)
 })
 
-
 // Clase 4 - Serving json on a route
 app.get("/json", (req, res) => 
 {
     let messageRoute = "Hello json"
-
     if (process.env.MESSAGE_STYLE === "uppercase") 
     {
         messageRoute = messageRoute.toUpperCase()
