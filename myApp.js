@@ -1,3 +1,5 @@
+// ---------------DEPENDENCIAS-------------------------
+
 // Cargamos el .env file con dotenv
 let dotenv = require('dotenv').config()
 console.log('MESSAGE_STYLE:', process.env.MESSAGE_STYLE);
@@ -5,6 +7,11 @@ console.log('MESSAGE_STYLE:', process.env.MESSAGE_STYLE);
 // Creamos el objeto express app object
 let express = require('express')
 let app = express() 
+
+// Middleware dependencies
+const bodyParser = require('body-parser')
+
+// ---------------DEPENDENCIAS-------------------------
 
 // Class 1 - Meet the Node console
 console.log('Hello world')
@@ -20,12 +27,31 @@ console.log('this is antoher change using nodemon')
 // Globales App
 app.use((req, res, next) => {
     console.log('Empiezan los middleware')
+    next()
 })
+
+// Middleware de terceros
+app.use(bodyParser.json()) 
+
+
 app.use(express.static(__dirname + "/public")) 
 app.use(express.static(__dirname + "/views")) // Le decimos a la app que en cualquier momento puede usar los archivos de ambos directorios 
 
+
+// Middleware hecho por nosotros
+// Logger
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path} - ${req.ip}`)
+    next()
+})
+
+
 // Route specific
 app.use("/public", express.static(__dirname + "/public")) // Le decimos a la app que puede la ruta /public usar los archivos del directorio /public
+
+
+
+
 
 // Class 2 - Start a working Express server
 app.get("/", (req, res)=> {
