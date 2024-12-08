@@ -9,10 +9,18 @@ console.log('this is a change using nodemon')
 console.log('this is antoher change using nodemon')
 
 
+// Clase 4 -> Usando middleware antes de ver qué es el middleware
+
+// Middleware block
+// Montamos middleware para servir archivos estaticos desde el directorio /public
+app.use(("/public", express.static(__dirname + "/public")))
+
+
 
 // Class 2 - Start a working Express server
 app.get("/", (req, res)=> {
-    res.send('Hello Express')
+    const absolutePath = __dirname + "/views/index.html"
+    res.sendFile(absolutePath)
 })
 
 
@@ -36,6 +44,9 @@ app.get("/redirect", (req, res) => {
 app.get("/redirected", (req, res) => {
     res.send("You have been redirected")
 })
+
+
+
 
 
 module.exports = app
