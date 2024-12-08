@@ -1,3 +1,8 @@
+// Cargamos el .env file con dotenv
+
+let dotenv = require('dotenv')
+
+
 // Creamos el objeto express app object
 let express = require('express')
 let app = express() 
@@ -25,8 +30,18 @@ app.get("/", (req, res)=> {
 
 
 // Clase 4 - Serving json on a route
-app.get("/json", (req, res) => {
-    res.json({"message": "Hello json"})
+app.get("/json", (req, res) => 
+{
+    let messageRoute = "Hello json"
+
+    if (process.env.MESSAGE_STYLE === "upppercase") 
+    {
+        messageRoute = messageRoute.toUpperCase()
+    } else 
+    {
+        messageRoute = messageRoute.toLowerCase()
+    }
+    res.json( {message: messageRoute} )
 })
 
 
