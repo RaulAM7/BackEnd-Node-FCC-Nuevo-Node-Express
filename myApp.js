@@ -24,6 +24,13 @@ app.get("/", (req, res)=> {
 })
 
 
+// Clase 4 - Serving json on a route
+
+app.get("/json", (req, res) => {
+    res.json({"message": "Hello json"})
+})
+
+
 // Class 3 - Route handlers responses types
 app.get("/send-1", (req, res) => {
     res.send('Esto es un texto mandado por .send')
