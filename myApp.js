@@ -54,6 +54,26 @@ app.use(bodyParser.json())
 
 
 
+// Middleware root level más usados
+
+// express.json() -> Analiza cuerpos JSON en las solicitudes y los convierte ne un objeto accesible desde req.body
+app.use(express.json())
+
+// express.urlencoded() -> Analiza datos enviados mediante formularios HTML y los convierte en un objeto accesible desde req.body
+app.use(express.urlencoded({extended: true}))
+
+
+// 
+
+
+
+// Logger auxiliar printeador del body de la request
+const printRequestBody = (req, res, next) => {
+    console.log(`Este es el request body => ${JSON.stringify(req.body)}`)
+    next()
+}
+app.use(printRequestBody)
+
 // ---------------MIDDLEWARE - END-------------------------
 
 
