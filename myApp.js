@@ -14,8 +14,8 @@ const cookiePArser = require('cookie-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const helmet = require('helmet')
-
-
+const jwt = require('jsonwebtoken')
+const rateLImit = require('express-rate-limit')
 
 // ---------------DEPENDENCIAS - END-------------------------
 
@@ -79,16 +79,46 @@ app.use(morgan('dev'))
 app.use(helmet())
 
 
-
-// Logger auxiliar printeador del body de la request
+// middleware logger auxiliar printeador del body de la request
 const printRequestBody = (req, res, next) => {
     console.log(`Este es el request body => ${JSON.stringify(req.body)}`)
     next()
 }
 app.use(printRequestBody)
 
-// ---------------MIDDLEWARE - END-------------------------
 
+// middleware personalizado para manejo de errores
+const middlewareErrorChecker = (err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('ALGO SALÓ MAL')
+    next
+}
+
+
+// MIDDLEWARES AVANZADOS
+
+// JWT Auth - Middleware de Autenticacion y Autorizacion 
+app.use((req, res, next) => {
+    const token = req.headers['authorization']
+    if (!token) return res.status(403).send('ERROR: NO AUTHORIZATION')
+    
+    jwt.verify(token, 'SECRET_KEY', (err, decoded) => {
+        if (err) return res.status(403).send('ERROR: TOKEN NO VALIDO')
+    })
+
+    req.user = decoded
+    next()
+})
+
+// EXPRESS RATE LIMIT - Middleware de limitacion de solicitudes, para evitar abusos o ataques por fuerza bruta
+const limiter = rateLImit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 100, // Maximo de 100 solicitudes por IP
+})
+app.use(limiter)
+
+
+// ---------------MIDDLEWARE - END-------------------------
 
 // ---------------ROUTES - CONTROLLERS - START-------------------------
 
