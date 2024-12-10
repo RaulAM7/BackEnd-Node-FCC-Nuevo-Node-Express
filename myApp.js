@@ -10,8 +10,14 @@ let app = express()
 
 // Middleware dependencies
 const bodyParser = require('body-parser')
+const cookiePArser = require('cookie-parser')
+const cors = require('cors')
+const morgan = require('morgan')
+const helmet = require('helmet')
 
-// ---------------DEPENDENCIAS-------------------------
+
+
+// ---------------DEPENDENCIAS - END-------------------------
 
 // Class 1 - Meet the Node console
 console.log('Hello world')
@@ -52,9 +58,7 @@ app.use(express.static(__dirname + "/views")) // Le decimos a la app que en cual
 app.use(bodyParser.json()) 
 
 
-
-
-// Middleware root level más usados
+// MIDDLEWARE ROOT LEVEL más usados
 
 // express.json() -> Analiza cuerpos JSON en las solicitudes y los convierte ne un objeto accesible desde req.body
 app.use(express.json())
@@ -62,8 +66,17 @@ app.use(express.json())
 // express.urlencoded() -> Analiza datos enviados mediante formularios HTML y los convierte en un objeto accesible desde req.body
 app.use(express.urlencoded({extended: true}))
 
+// cookie-parser -> Analiza cookies de las solicitudes y las convierte ne un objeto accesible desde req.cookies
+app.use(cookiePArser())
 
-// 
+// cors -> Habilita CORS (Cross-Origin Resource Sharing) - Permite que tu API sea accesible desde dominios externos
+app.use(cors())
+
+// morgan -> Middleware para registro de solicitudes en un formato predefinido
+app.use(morgan('dev'))
+
+// helmet -> Agrega encabezados HTTP para mejorar la seguridad de tu aplicación
+app.use(helmet())
 
 
 
