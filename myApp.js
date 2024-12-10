@@ -19,40 +19,45 @@ console.log('Hello world')
 console.log('this is a change using nodemon')
 console.log('this is antoher change using nodemon')
 
-// ---------------MIDDLEWARE-------------------------
+// ---------------MIDDLEWARE - START-------------------------
 
 // Clase 4 -> Usando middleware antes de ver qué es el middleware
 // MIDDLEWARE BLOCK
 // Montamos middleware para servir archivos estaticos desde el directorio /public
 
 // Globales App
-app.use((req, res, next) => {
-    console.log('Empiezan los middleware')
+const middlewareChecker = ((req, res, next) => {
+    console.log('Se ejecutan los middleware los middleware')
     next()
 })
+app.use(middlewareChecker)
+
+// Middleware hecho por nosotros
+// Logger
+
+const loggerMiddleware = ((req, res, next) => {
+    req.time = new Date().toISOString()
+    let log_message = `[TIME: ${req.time}] METHOD: ${req.method} ROUTE: ${req.path} - IP: ${req.ip}`
+    console.log(log_message)
+    next()
+})
+ 
+app.use(loggerMiddleware)
+
+// Middlewares Static para servir archivos estaticos
+app.use(express.static(__dirname + "/public")) 
+app.use(express.static(__dirname + "/views")) // Le decimos a la app que en cualquier momento puede usar los archivos de ambos directorios 
 
 // Middleware de terceros
 app.use(bodyParser.json()) 
 
 
-app.use(express.static(__dirname + "/public")) 
-app.use(express.static(__dirname + "/views")) // Le decimos a la app que en cualquier momento puede usar los archivos de ambos directorios 
 
 
-// Middleware hecho por nosotros
-// Logger
-app.use((req, res, next) => {
-    let log_message = `${req.method} ${req.path} - ${req.ip}`
-    console.log(log_message)
-    next()
-})
- 
+// ---------------MIDDLEWARE - END-------------------------
 
 
-// ---------------MIDDLEWARE-------------------------
-
-
-// ---------------ROUTES - CONTROLLERS-------------------------
+// ---------------ROUTES - CONTROLLERS - START-------------------------
 
 // Route specific
 app.use("/public", express.static(__dirname + "/public")) // Le decimos a la app que puede la ruta /public usar los archivos del directorio /public
@@ -115,7 +120,7 @@ app.get("/redirected", (req, res) => {
 })
 
 
-// ---------------ROUTES - CONTROLLERS-------------------------
+// ---------------ROUTES - CONTROLLERS - END-------------------------
 
 
 
