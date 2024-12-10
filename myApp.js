@@ -42,10 +42,10 @@ app.use(express.static(__dirname + "/views")) // Le decimos a la app que en cual
 // Middleware hecho por nosotros
 // Logger
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path} - ${req.ip}`)
+    let log_message = `${req.method} ${req.path} - ${req.ip}`
+    console.log(log_message)
     next()
 })
-
  
 
 
