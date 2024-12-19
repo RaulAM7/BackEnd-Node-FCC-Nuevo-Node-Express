@@ -96,7 +96,7 @@ const middlewareErrorChecker = (err, req, res, next) => {
 
 
 // MIDDLEWARES AVANZADOS
-
+/*
 // JWT Auth - Middleware de Autenticacion y Autorizacion 
 app.use((req, res, next) => {
     const token = req.headers['authorization']
@@ -109,6 +109,7 @@ app.use((req, res, next) => {
     req.user = decoded
     next()
 })
+*/
 
 // EXPRESS RATE LIMIT - Middleware de limitacion de solicitudes, para evitar abusos o ataques por fuerza bruta
 const limiter = rateLImit({
@@ -124,8 +125,6 @@ app.use(limiter)
 
 // Route specific
 app.use("/public", express.static(__dirname + "/public")) // Le decimos a la app que puede la ruta /public usar los archivos del directorio /public
-
-
 
 
 
@@ -160,7 +159,6 @@ app.get("/now", (req, res, next) => {
 )
 
 
-
 // Class 3 - Route handlers responses types
 app.get("/send-1", (req, res) => {
     res.send('Esto es un texto mandado por .send')
@@ -181,6 +179,15 @@ app.get("/redirect", (req, res) => {
 app.get("/redirected", (req, res) => {
     res.send("You have been redirected")
 })
+
+
+// 10.- Ruta con query params
+
+app.get("/name", (req, res) => {
+    let response = req.query.first + " " + req.query.last
+    res.json( {"name": response} ) 
+})
+
 
 
 // ---------------ROUTES - CONTROLLERS - END-------------------------
