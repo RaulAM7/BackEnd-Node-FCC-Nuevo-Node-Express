@@ -30,5 +30,6 @@
   "bugs": {
     "url": "https://github.com/RaulAM7/BackEnd-Node-FCC-Nuevo-Node-Express/issues"
   },
-  "homepage": "https://github.com/RaulAM7/BackEnd-Node-FCC-Nuevo-Node-Express#readme"
+  "homepage": "https://github.com/RaulAM7/BackEnd-Node-FCC-Nuevo-Node-Express#readme",
+  "devDependencies": {}
 }
